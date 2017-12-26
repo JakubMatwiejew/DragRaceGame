@@ -10124,17 +10124,18 @@ var LogDetails = function (_React$Component) {
                         _this.props.actionLogin(true, false);
                     } else {
                         _this.props.actionLogin(true, true);
+                        var newGame = {
+                            name: _this.props.userName,
+                            mail: _this.props.userMail,
+                            money: 500
+                        };
+                        fetch('http://localhost:3000/users', {
+                            method: 'POST',
+                            body: JSON.stringify(newGame),
+                            headers: { "Content-Type": "application/json" }
+                        }).then(console.log(newGame));
                     }
                 });
-                var newGame = {
-                    name: _this.props.userName,
-                    mail: _this.props.userMail
-                };
-                fetch('http://localhost:3000/users', {
-                    method: 'POST',
-                    body: JSON.stringify(newGame),
-                    headers: { "Content-Type": "application/json" }
-                }).then(console.log(newGame));
             }
         };
 
@@ -10239,58 +10240,118 @@ var LogPage = function (_React$Component2) {
     return LogPage;
 }(_react2.default.Component);
 
-var App = function (_React$Component3) {
-    _inherits(App, _React$Component3);
+var Upgrades = function (_React$Component3) {
+    _inherits(Upgrades, _React$Component3);
+
+    function Upgrades(props) {
+        _classCallCheck(this, Upgrades);
+
+        return _possibleConstructorReturn(this, (Upgrades.__proto__ || Object.getPrototypeOf(Upgrades)).call(this, props));
+    }
+
+    _createClass(Upgrades, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'button',
+                    null,
+                    'Upgrade 1'
+                ),
+                _react2.default.createElement(
+                    'button',
+                    null,
+                    'Upgrade 2'
+                )
+            );
+        }
+    }]);
+
+    return Upgrades;
+}(_react2.default.Component);
+
+var GameWindow = function (_React$Component4) {
+    _inherits(GameWindow, _React$Component4);
+
+    function GameWindow(props) {
+        _classCallCheck(this, GameWindow);
+
+        return _possibleConstructorReturn(this, (GameWindow.__proto__ || Object.getPrototypeOf(GameWindow)).call(this, props));
+    }
+
+    _createClass(GameWindow, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'h3',
+                    null,
+                    'The game window'
+                ),
+                _react2.default.createElement(Upgrades, null)
+            );
+        }
+    }]);
+
+    return GameWindow;
+}(_react2.default.Component);
+
+var App = function (_React$Component5) {
+    _inherits(App, _React$Component5);
 
     function App(props) {
         _classCallCheck(this, App);
 
-        var _this3 = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+        var _this5 = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-        _this3.setLogged = function (logged, newUser) {
-            return _this3.setState({ userLogged: logged, newUser: newUser });
+        _this5.setLogged = function (logged, newUser) {
+            return _this5.setState({ userLogged: logged, newUser: newUser });
         };
 
-        _this3.handleNameChange = function (e) {
-            _this3.setState({
+        _this5.handleNameChange = function (e) {
+            _this5.setState({
                 userName: e.target.value
             });
         };
 
-        _this3.handleMailChange = function (e) {
-            _this3.setState({
+        _this5.handleMailChange = function (e) {
+            _this5.setState({
                 userMail: e.target.value
             });
         };
 
-        _this3.handleChallengeTypeChange = function (e) {
-            _this3.setState({
+        _this5.handleChallengeTypeChange = function (e) {
+            _this5.setState({
                 challengeType: e.target.value
             });
         };
 
-        _this3.handleChallengeGoal = function (e) {
-            _this3.setState({
+        _this5.handleChallengeGoal = function (e) {
+            _this5.setState({
                 challengeGoal: e.target.value
             });
         };
 
-        _this3.handleLogClick = function (e, logged) {
+        _this5.handleLogClick = function (e, logged) {
             if (logged) {
-                _this3.setState({
+                _this5.setState({
                     newUser: false
                 });
             } else {
-                if (_this3.state.userMail.length == 0 || _this3.state.userName.length == 0) {
-                    _this3.setState({
+                if (_this5.state.userMail.length == 0 || _this5.state.userName.length == 0) {
+                    _this5.setState({
                         actionLogInfo: "Fill the form!"
                     });
-                } else if (_this3.state.userMail.indexOf('@') < 0) {
-                    _this3.setState({
+                } else if (_this5.state.userMail.indexOf('@') < 0) {
+                    _this5.setState({
                         actionLogInfo: "Wrong e-mail adress!"
                     });
                 } else {
-                    _this3.setState({
+                    _this5.setState({
                         actionLogInfo: "",
                         displayLog: false
                     });
@@ -10298,34 +10359,30 @@ var App = function (_React$Component3) {
             }
         };
 
-        _this3.state = {
+        _this5.state = {
             userName: "",
             userMail: "",
             users: null,
             newUser: true,
-            challengeType: "programming",
-            challengeGoal: "",
-            challengeProgress: "",
             displayLog: true,
-            userLogged: false,
-            backgroundUrl: "./dist/img/background.jpg"
+            userLogged: false
         };
-        return _this3;
+        return _this5;
     }
 
     _createClass(App, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            var _this4 = this;
+            var _this6 = this;
 
             fetch('http://localhost:3000/users').then(function (r) {
                 return r.json();
             }).then(function (data) {
-                _this4.setState({});
+                _this6.setState({});
                 var users = Object.keys(data).map(function (id) {
                     return data[id];
                 });
-                _this4.setState({
+                _this6.setState({
                     users: users
                 });
             });
@@ -10352,7 +10409,8 @@ var App = function (_React$Component3) {
                         null,
                         'The best racing game ever'
                     ),
-                    _react2.default.createElement(LogPage, { userLogged: this.state.userLogged, actionLogin: this.setLogged, display: this.state.displayLog, userMail: this.state.userMail, users: this.state.users, userName: this.state.userName, handleMailChange: this.handleMailChange, handleNameChange: this.handleNameChange })
+                    _react2.default.createElement(LogPage, { userLogged: this.state.userLogged, actionLogin: this.setLogged, display: this.state.displayLog, userMail: this.state.userMail, users: this.state.users, userName: this.state.userName, handleMailChange: this.handleMailChange, handleNameChange: this.handleNameChange }),
+                    _react2.default.createElement(GameWindow, { player: true })
                 )
             );
         }

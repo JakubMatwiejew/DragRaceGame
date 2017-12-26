@@ -41,17 +41,18 @@ class LogDetails extends React.Component{
                         this.props.actionLogin(true, false);
                     }else{
                         this.props.actionLogin(true, true);
+                        const newGame = {
+                            name: this.props.userName,
+                            mail: this.props.userMail,
+                            money: 500
+                        };
+                        fetch('http://localhost:3000/users',{
+                            method: 'POST',
+                            body: JSON.stringify(newGame),
+                            headers: {"Content-Type" : "application/json"}
+                        }).then(console.log(newGame));
                     }
                 });
-                    const newGame = {
-                        name: this.props.userName,
-                        mail: this.props.userMail,
-                    };
-                    fetch('http://localhost:3000/users',{
-                        method: 'POST',
-                        body: JSON.stringify(newGame),
-                        headers: {"Content-Type" : "application/json"}
-                    }).then(console.log(newGame));
             }
     }
     componentDidUpdate(){
@@ -106,6 +107,32 @@ class LogPage extends React.Component{
     }
 }
 
+class Upgrades extends React.Component{
+    constructor(props){
+        super(props)
+    }
+    render(){
+        return(<div>
+                <button>Upgrade 1</button>
+                <button>Upgrade 2</button>
+            </div>
+        )
+    }
+}
+
+class GameWindow extends React.Component{
+    constructor(props){
+        super(props);
+    }
+    render(){
+        return(<div>
+                <h3>The game window</h3>
+                <Upgrades/>
+        </div>
+        )
+    }
+}
+
 class App extends React.Component{
     constructor(props){
         super(props);
@@ -114,12 +141,8 @@ class App extends React.Component{
             userMail: "",
             users: null,
             newUser: true,
-            challengeType: "programming",
-            challengeGoal: "",
-            challengeProgress: "",
             displayLog: true,
-            userLogged: false,
-            backgroundUrl: "./dist/img/background.jpg"
+            userLogged: false
         }
     }
 
@@ -188,6 +211,7 @@ class App extends React.Component{
                     <h1>Drag Race Game</h1>
                     <p>The best racing game ever</p>
                     <LogPage userLogged={this.state.userLogged} actionLogin={this.setLogged} display={this.state.displayLog} userMail={this.state.userMail} users={this.state.users} userName={this.state.userName} handleMailChange={this.handleMailChange} handleNameChange={this.handleNameChange}/>
+                    <GameWindow player/>
                 </div>
             </div>
         )
