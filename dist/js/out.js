@@ -10107,12 +10107,17 @@ var LogDetails = function (_React$Component) {
         _this.handleLogClick = function (e) {
             if (_this.props.userMail.length == 0 || _this.props.userName.length == 0) {
                 _this.setState({
-                    actionLogInfo: "Fill the form!!"
+                    actionLogInfo: "Fill the form!"
                 });
             } else if (_this.props.userMail.indexOf('@') < 0) {
                 _this.setState({
-                    actionLogInfo: "Wrong e-mail adress!!"
+                    actionLogInfo: "Wrong e-mail adress!"
                 });
+            } else if (_this.userExists()) {
+                _this.setState({
+                    actionLogInfo: "User " + _this.props.userName + " already exists! Pick another user name. If you're " + _this.props.userName + " - check again your e-mail adress."
+                });
+                console.log(_this.userExists());
             } else {
                 _this.setState({
                     actionLogInfo: "",
@@ -10149,6 +10154,17 @@ var LogDetails = function (_React$Component) {
     }
 
     _createClass(LogDetails, [{
+        key: 'userExists',
+        value: function userExists() {
+            var exists = false;
+            for (var i = 0; i < this.props.users.length; i++) {
+                if (this.props.userName == this.props.users[i].name && this.props.userMail !== this.props.users[i].mail) {
+                    exists = true;
+                }
+            }
+            return exists;
+        }
+    }, {
         key: 'componentDidUpdate',
         value: function componentDidUpdate() {
             this.checkUser();
@@ -10232,7 +10248,7 @@ var LogPage = function (_React$Component2) {
                     null,
                     'Type your user name and e-mail adress to star or resume your game'
                 ),
-                _react2.default.createElement(LogDetails, { actionLogin: this.props.actionLogin, actionLogInfo: this.props.actionLogInfo, handleLogClick: this.props.handleLogClick, userMail: this.props.userMail, users: this.props.users, userName: this.props.userName, handleMailChange: this.props.handleMailChange, handleNameChange: this.props.handleNameChange })
+                _react2.default.createElement(LogDetails, { newUser: this.props.newUser, actionLogin: this.props.actionLogin, actionLogInfo: this.props.actionLogInfo, handleLogClick: this.props.handleLogClick, userMail: this.props.userMail, users: this.props.users, userName: this.props.userName, handleMailChange: this.props.handleMailChange, handleNameChange: this.props.handleNameChange })
             );
         }
     }]);
@@ -10342,7 +10358,11 @@ var App = function (_React$Component5) {
                     newUser: false
                 });
             } else {
-                if (_this5.state.userMail.length == 0 || _this5.state.userName.length == 0) {
+                if (_this5.state.userName == "Kuba") {
+                    _this5.setState({
+                        actionLogInfo: "DUPA"
+                    });
+                } else if (_this5.state.userMail.length == 0 || _this5.state.userName.length == 0) {
                     _this5.setState({
                         actionLogInfo: "Fill the form!"
                     });
@@ -10409,7 +10429,7 @@ var App = function (_React$Component5) {
                         null,
                         'The best racing game ever'
                     ),
-                    _react2.default.createElement(LogPage, { userLogged: this.state.userLogged, actionLogin: this.setLogged, display: this.state.displayLog, userMail: this.state.userMail, users: this.state.users, userName: this.state.userName, handleMailChange: this.handleMailChange, handleNameChange: this.handleNameChange }),
+                    _react2.default.createElement(LogPage, { newUser: this.state.newUser, userLogged: this.state.userLogged, actionLogin: this.setLogged, display: this.state.displayLog, userMail: this.state.userMail, users: this.state.users, userName: this.state.userName, handleMailChange: this.handleMailChange, handleNameChange: this.handleNameChange }),
                     _react2.default.createElement(GameWindow, { player: true })
                 )
             );

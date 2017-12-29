@@ -21,16 +21,30 @@ class LogDetails extends React.Component{
             this.props.handleMailChange(e);
         }
     }
+    userExists(){
+        let exists = false;
+        for (let i = 0; i < this.props.users.length; i++) {
+            if (this.props.userName == this.props.users[i].name && this.props.userMail !== this.props.users[i].mail) {
+                exists = true;
+            }
+        }
+        return exists;
+    }
     handleLogClick = (e) => {
             if (this.props.userMail.length == 0 || this.props.userName.length == 0) {
                 this.setState({
-                    actionLogInfo: "Fill the form!!"
+                    actionLogInfo: "Fill the form!"
                 })
             } else if (this.props.userMail.indexOf('@') < 0) {
                 this.setState({
-                    actionLogInfo: "Wrong e-mail adress!!"
+                    actionLogInfo: "Wrong e-mail adress!"
                 })
-            } else {
+            } else if (this.userExists()) {
+                this.setState({
+                    actionLogInfo: "User "+this.props.userName+" already exists! Pick another user name. If you're "+this.props.userName+" - check again your e-mail adress."
+                });
+                console.log(this.userExists())
+            }else {
                 this.setState({
                     actionLogInfo: "",
                     displayLog: false,
@@ -101,7 +115,7 @@ class LogPage extends React.Component{
         if(this.props.userLogged == true) return false
         return(<div>
                 <h2>Type your user name and e-mail adress to star or resume your game</h2>
-                <LogDetails actionLogin={this.props.actionLogin} actionLogInfo={this.props.actionLogInfo} handleLogClick={this.props.handleLogClick} userMail={this.props.userMail} users={this.props.users} userName={this.props.userName} handleMailChange={this.props.handleMailChange} handleNameChange={this.props.handleNameChange}/>
+                <LogDetails newUser={this.props.newUser} actionLogin={this.props.actionLogin} actionLogInfo={this.props.actionLogInfo} handleLogClick={this.props.handleLogClick} userMail={this.props.userMail} users={this.props.users} userName={this.props.userName} handleMailChange={this.props.handleMailChange} handleNameChange={this.props.handleNameChange}/>
             </div>
         )
     }
@@ -174,8 +188,12 @@ class App extends React.Component{
             this.setState({
                 newUser: false,
             });
-        }else {
-            if (this.state.userMail.length == 0 || this.state.userName.length == 0) {
+        } else {
+            if (this.state.userName == "Kuba") {
+                this.setState({
+                    actionLogInfo: "DUPA"
+                })
+            }else if (this.state.userMail.length == 0 || this.state.userName.length == 0) {
                 this.setState({
                     actionLogInfo: "Fill the form!"
                 })
@@ -210,7 +228,7 @@ class App extends React.Component{
                 <div className='left'>
                     <h1>Drag Race Game</h1>
                     <p>The best racing game ever</p>
-                    <LogPage userLogged={this.state.userLogged} actionLogin={this.setLogged} display={this.state.displayLog} userMail={this.state.userMail} users={this.state.users} userName={this.state.userName} handleMailChange={this.handleMailChange} handleNameChange={this.handleNameChange}/>
+                    <LogPage newUser={this.state.newUser} userLogged={this.state.userLogged} actionLogin={this.setLogged} display={this.state.displayLog} userMail={this.state.userMail} users={this.state.users} userName={this.state.userName} handleMailChange={this.handleMailChange} handleNameChange={this.handleNameChange}/>
                     <GameWindow player/>
                 </div>
             </div>
