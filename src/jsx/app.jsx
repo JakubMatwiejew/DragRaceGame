@@ -42,8 +42,7 @@ class LogDetails extends React.Component{
             } else if (this.userExists()) {
                 this.setState({
                     actionLogInfo: "User "+this.props.userName+" already exists! Pick another user name. If you're "+this.props.userName+" - check again your e-mail adress."
-                });
-                console.log(this.userExists())
+                })
             }else {
                 this.setState({
                     actionLogInfo: "",
@@ -133,7 +132,91 @@ class Upgrades extends React.Component{
         )
     }
 }
-
+class DragRace extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            myTime: 10.14,
+            opponentTime: 0,
+            myInterval:0,
+            opponentInterval:0,
+            opponents: "",
+            opponentName: "",
+            opponentPhoto: ""
+        }
+    }
+    componentWillMount(){
+        fetch('https://uinames.com/api/?ext[1]')
+            .then(r => r.json())
+            .then( data => {
+                this.setState({});
+                let opponents = Object.keys(data).map(id => data[id]);
+                this.setState({
+                    opponents: opponents,
+                    opponentName: opponents[0]+" "+opponents[1],
+                    opponentPhoto: opponents[11]
+                });
+                console.log(this.state.opponents)
+            });
+    }
+    dragRace = () => {
+        var myDragRaceInterval = setInterval(()=>{
+            this.setState({
+                myInterval: this.state.myInterval+0.01
+            });
+            if(this.state.myTime == (this.state.myInterval).toFixed(2)){
+                clearInterval(myDragRaceInterval)
+            }
+        },10);
+        this.setState({
+            opponentTime: (Math.random() * 20 + 10)
+        });
+        var opponentDragRaceIntrval = setInterval(()=>{
+            this.setState({
+                opponentInterval: this.state.opponentInterval+0.01
+            });
+            console.log(this.state.opponentTime)
+            if((this.state.opponentTime).toFixed(2) == (this.state.opponentInterval).toFixed(2)){
+                clearInterval(opponentDragRaceIntrval)
+            }
+        },10);
+    }
+    render(){
+        return(<div>
+            <h1>{this.props.userName}</h1>
+            <h1>{this.state.myInterval.toFixed(2)}</h1>
+            <div><img src={this.state.opponentPhoto}/></div>
+            <h1>{this.state.opponentName}</h1>
+            <h1>{this.state.opponentInterval.toFixed(2)}</h1>
+            <button onClick={this.dragRace}>Start!</button>
+        </div>)
+    }
+}
+class TimeAttack extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            myTime: 10.14,
+            myInterval:0,
+        }
+    }
+    timeAttack = () => {
+        var timeAttackInterval = setInterval(()=>{
+            this.setState({
+                myInterval: this.state.myInterval+0.01
+            });
+            if(this.state.myTime == (this.state.myInterval).toFixed(2)){
+                clearInterval(timeAttackInterval)
+            }
+        },10);
+    }
+    render(){
+        return(<div>
+            <h1>{this.state.myInterval.toFixed(2)}</h1>
+            <button onClick={this.timeAttack}>Start!</button>
+        </div>)
+    }
+}
 class GameWindow extends React.Component{
     constructor(props){
         super(props);
@@ -142,6 +225,8 @@ class GameWindow extends React.Component{
         return(<div>
                 <h3>The game window</h3>
                 <Upgrades/>
+                <TimeAttack/>
+                <DragRace userName={this.props.userName}/>
         </div>
         )
     }
@@ -229,7 +314,7 @@ class App extends React.Component{
                     <h1>Drag Race Game</h1>
                     <p>The best racing game ever</p>
                     <LogPage newUser={this.state.newUser} userLogged={this.state.userLogged} actionLogin={this.setLogged} display={this.state.displayLog} userMail={this.state.userMail} users={this.state.users} userName={this.state.userName} handleMailChange={this.handleMailChange} handleNameChange={this.handleNameChange}/>
-                    <GameWindow player/>
+                    <GameWindow userName={this.state.userName}/>
                 </div>
             </div>
         )

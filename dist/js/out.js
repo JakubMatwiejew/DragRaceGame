@@ -10117,7 +10117,6 @@ var LogDetails = function (_React$Component) {
                 _this.setState({
                     actionLogInfo: "User " + _this.props.userName + " already exists! Pick another user name. If you're " + _this.props.userName + " - check again your e-mail adress."
                 });
-                console.log(_this.userExists());
             } else {
                 _this.setState({
                     actionLogInfo: "",
@@ -10288,8 +10287,163 @@ var Upgrades = function (_React$Component3) {
     return Upgrades;
 }(_react2.default.Component);
 
-var GameWindow = function (_React$Component4) {
-    _inherits(GameWindow, _React$Component4);
+var DragRace = function (_React$Component4) {
+    _inherits(DragRace, _React$Component4);
+
+    function DragRace(props) {
+        _classCallCheck(this, DragRace);
+
+        var _this4 = _possibleConstructorReturn(this, (DragRace.__proto__ || Object.getPrototypeOf(DragRace)).call(this, props));
+
+        _this4.dragRace = function () {
+            var myDragRaceInterval = setInterval(function () {
+                _this4.setState({
+                    myInterval: _this4.state.myInterval + 0.01
+                });
+                if (_this4.state.myTime == _this4.state.myInterval.toFixed(2)) {
+                    clearInterval(myDragRaceInterval);
+                }
+            }, 10);
+            _this4.setState({
+                opponentTime: Math.random() * 20 + 10
+            });
+            var opponentDragRaceIntrval = setInterval(function () {
+                _this4.setState({
+                    opponentInterval: _this4.state.opponentInterval + 0.01
+                });
+                console.log(_this4.state.opponentTime);
+                if (_this4.state.opponentTime.toFixed(2) == _this4.state.opponentInterval.toFixed(2)) {
+                    clearInterval(opponentDragRaceIntrval);
+                }
+            }, 10);
+        };
+
+        _this4.state = {
+            myTime: 10.14,
+            opponentTime: 0,
+            myInterval: 0,
+            opponentInterval: 0,
+            opponents: "",
+            opponentName: "",
+            opponentPhoto: ""
+        };
+        return _this4;
+    }
+
+    _createClass(DragRace, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            var _this5 = this;
+
+            fetch('https://uinames.com/api/?ext[1]').then(function (r) {
+                return r.json();
+            }).then(function (data) {
+                _this5.setState({});
+                var opponents = Object.keys(data).map(function (id) {
+                    return data[id];
+                });
+                _this5.setState({
+                    opponents: opponents,
+                    opponentName: opponents[0] + " " + opponents[1],
+                    opponentPhoto: opponents[11]
+                });
+                console.log(_this5.state.opponents);
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'h1',
+                    null,
+                    this.props.userName
+                ),
+                _react2.default.createElement(
+                    'h1',
+                    null,
+                    this.state.myInterval.toFixed(2)
+                ),
+                _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement('img', { src: this.state.opponentPhoto })
+                ),
+                _react2.default.createElement(
+                    'h1',
+                    null,
+                    this.state.opponentName
+                ),
+                _react2.default.createElement(
+                    'h1',
+                    null,
+                    this.state.opponentInterval.toFixed(2)
+                ),
+                _react2.default.createElement(
+                    'button',
+                    { onClick: this.dragRace },
+                    'Start!'
+                )
+            );
+        }
+    }]);
+
+    return DragRace;
+}(_react2.default.Component);
+
+var TimeAttack = function (_React$Component5) {
+    _inherits(TimeAttack, _React$Component5);
+
+    function TimeAttack(props) {
+        _classCallCheck(this, TimeAttack);
+
+        var _this6 = _possibleConstructorReturn(this, (TimeAttack.__proto__ || Object.getPrototypeOf(TimeAttack)).call(this, props));
+
+        _this6.timeAttack = function () {
+            var timeAttackInterval = setInterval(function () {
+                _this6.setState({
+                    myInterval: _this6.state.myInterval + 0.01
+                });
+                if (_this6.state.myTime == _this6.state.myInterval.toFixed(2)) {
+                    clearInterval(timeAttackInterval);
+                }
+            }, 10);
+        };
+
+        _this6.state = {
+            myTime: 10.14,
+            myInterval: 0
+        };
+        return _this6;
+    }
+
+    _createClass(TimeAttack, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'h1',
+                    null,
+                    this.state.myInterval.toFixed(2)
+                ),
+                _react2.default.createElement(
+                    'button',
+                    { onClick: this.timeAttack },
+                    'Start!'
+                )
+            );
+        }
+    }]);
+
+    return TimeAttack;
+}(_react2.default.Component);
+
+var GameWindow = function (_React$Component6) {
+    _inherits(GameWindow, _React$Component6);
 
     function GameWindow(props) {
         _classCallCheck(this, GameWindow);
@@ -10308,7 +10462,9 @@ var GameWindow = function (_React$Component4) {
                     null,
                     'The game window'
                 ),
-                _react2.default.createElement(Upgrades, null)
+                _react2.default.createElement(Upgrades, null),
+                _react2.default.createElement(TimeAttack, null),
+                _react2.default.createElement(DragRace, { userName: this.props.userName })
             );
         }
     }]);
@@ -10316,62 +10472,62 @@ var GameWindow = function (_React$Component4) {
     return GameWindow;
 }(_react2.default.Component);
 
-var App = function (_React$Component5) {
-    _inherits(App, _React$Component5);
+var App = function (_React$Component7) {
+    _inherits(App, _React$Component7);
 
     function App(props) {
         _classCallCheck(this, App);
 
-        var _this5 = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+        var _this8 = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-        _this5.setLogged = function (logged, newUser) {
-            return _this5.setState({ userLogged: logged, newUser: newUser });
+        _this8.setLogged = function (logged, newUser) {
+            return _this8.setState({ userLogged: logged, newUser: newUser });
         };
 
-        _this5.handleNameChange = function (e) {
-            _this5.setState({
+        _this8.handleNameChange = function (e) {
+            _this8.setState({
                 userName: e.target.value
             });
         };
 
-        _this5.handleMailChange = function (e) {
-            _this5.setState({
+        _this8.handleMailChange = function (e) {
+            _this8.setState({
                 userMail: e.target.value
             });
         };
 
-        _this5.handleChallengeTypeChange = function (e) {
-            _this5.setState({
+        _this8.handleChallengeTypeChange = function (e) {
+            _this8.setState({
                 challengeType: e.target.value
             });
         };
 
-        _this5.handleChallengeGoal = function (e) {
-            _this5.setState({
+        _this8.handleChallengeGoal = function (e) {
+            _this8.setState({
                 challengeGoal: e.target.value
             });
         };
 
-        _this5.handleLogClick = function (e, logged) {
+        _this8.handleLogClick = function (e, logged) {
             if (logged) {
-                _this5.setState({
+                _this8.setState({
                     newUser: false
                 });
             } else {
-                if (_this5.state.userName == "Kuba") {
-                    _this5.setState({
+                if (_this8.state.userName == "Kuba") {
+                    _this8.setState({
                         actionLogInfo: "DUPA"
                     });
-                } else if (_this5.state.userMail.length == 0 || _this5.state.userName.length == 0) {
-                    _this5.setState({
+                } else if (_this8.state.userMail.length == 0 || _this8.state.userName.length == 0) {
+                    _this8.setState({
                         actionLogInfo: "Fill the form!"
                     });
-                } else if (_this5.state.userMail.indexOf('@') < 0) {
-                    _this5.setState({
+                } else if (_this8.state.userMail.indexOf('@') < 0) {
+                    _this8.setState({
                         actionLogInfo: "Wrong e-mail adress!"
                     });
                 } else {
-                    _this5.setState({
+                    _this8.setState({
                         actionLogInfo: "",
                         displayLog: false
                     });
@@ -10379,7 +10535,7 @@ var App = function (_React$Component5) {
             }
         };
 
-        _this5.state = {
+        _this8.state = {
             userName: "",
             userMail: "",
             users: null,
@@ -10387,22 +10543,22 @@ var App = function (_React$Component5) {
             displayLog: true,
             userLogged: false
         };
-        return _this5;
+        return _this8;
     }
 
     _createClass(App, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            var _this6 = this;
+            var _this9 = this;
 
             fetch('http://localhost:3000/users').then(function (r) {
                 return r.json();
             }).then(function (data) {
-                _this6.setState({});
+                _this9.setState({});
                 var users = Object.keys(data).map(function (id) {
                     return data[id];
                 });
-                _this6.setState({
+                _this9.setState({
                     users: users
                 });
             });
@@ -10430,7 +10586,7 @@ var App = function (_React$Component5) {
                         'The best racing game ever'
                     ),
                     _react2.default.createElement(LogPage, { newUser: this.state.newUser, userLogged: this.state.userLogged, actionLogin: this.setLogged, display: this.state.displayLog, userMail: this.state.userMail, users: this.state.users, userName: this.state.userName, handleMailChange: this.handleMailChange, handleNameChange: this.handleNameChange }),
-                    _react2.default.createElement(GameWindow, { player: true })
+                    _react2.default.createElement(GameWindow, { userName: this.state.userName })
                 )
             );
         }
