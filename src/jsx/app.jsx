@@ -113,7 +113,7 @@ class LogPage extends React.Component{
     render(){
         if(this.props.userLogged == true) return false
         return(<div>
-                <h2>Type your user name and e-mail adress to star or resume your game</h2>
+                <h2>Type your user name and e-mail adress to start or resume your game</h2>
                 <LogDetails newUser={this.props.newUser} actionLogin={this.props.actionLogin} actionLogInfo={this.props.actionLogInfo} handleLogClick={this.props.handleLogClick} userMail={this.props.userMail} users={this.props.users} userName={this.props.userName} handleMailChange={this.props.handleMailChange} handleNameChange={this.props.handleNameChange}/>
             </div>
         )
@@ -122,12 +122,40 @@ class LogPage extends React.Component{
 
 class Upgrades extends React.Component{
     constructor(props){
-        super(props)
+        super(props);
+        this.state={
+            upgrade1Stage: 1,
+            upgrade1Price: 50,
+            upgrade2Stage: 1,
+            upgrade2Price: 50
+        }
+    }
+    handleUpgrade1 = () => {
+        this.setState({
+            upgrade1Stage: this.state.upgrade1Stage+1,
+            upgrade1Price: this.state.upgrade1Price*(this.state.upgrade1Stage+1)
+        })
+    }
+    handleUpgrade2 = () => {
+        this.setState({
+            upgrade2Stage: this.state.upgrade2Stage+1,
+            upgrade2Price: this.state.upgrade2Price*(this.state.upgrade2Stage+1)
+        })
     }
     render(){
         return(<div>
-                <button>Upgrade 1</button>
-                <button>Upgrade 2</button>
+                <div>
+                    <h3>Upgrade 1</h3>
+                    <p>Stage installed: {this.state.upgrade1Stage}</p>
+                    <p>Price: {this.state.upgrade1Price}</p>
+                    <button onClick={this.handleUpgrade1}>Buy upgrade 1</button>
+                </div>
+                <div>
+                    <h3>Upgrade 2</h3>
+                    <p>Stage installed: {this.state.upgrade2Stage}</p>
+                    <p>Price: {this.state.upgrade2Price}</p>
+                    <button onClick={this.handleUpgrade2}>Buy upgrade 2</button>
+                </div>
             </div>
         )
     }
@@ -137,7 +165,7 @@ class DragRace extends React.Component{
         super(props);
         this.state = {
             myTime: 10.14,
-            opponentTime: 0,
+            opponentTime: 20,
             myInterval:0,
             opponentInterval:0,
             opponents: "",
@@ -169,7 +197,7 @@ class DragRace extends React.Component{
             }
         },10);
         this.setState({
-            opponentTime: (Math.random() * 20 + 10)
+            //opponentTime: (Math.random() * 20 + 10)
         });
         var opponentDragRaceIntrval = setInterval(()=>{
             this.setState({

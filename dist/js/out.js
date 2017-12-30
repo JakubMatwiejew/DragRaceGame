@@ -10245,7 +10245,7 @@ var LogPage = function (_React$Component2) {
                 _react2.default.createElement(
                     'h2',
                     null,
-                    'Type your user name and e-mail adress to star or resume your game'
+                    'Type your user name and e-mail adress to start or resume your game'
                 ),
                 _react2.default.createElement(LogDetails, { newUser: this.props.newUser, actionLogin: this.props.actionLogin, actionLogInfo: this.props.actionLogInfo, handleLogClick: this.props.handleLogClick, userMail: this.props.userMail, users: this.props.users, userName: this.props.userName, handleMailChange: this.props.handleMailChange, handleNameChange: this.props.handleNameChange })
             );
@@ -10261,7 +10261,29 @@ var Upgrades = function (_React$Component3) {
     function Upgrades(props) {
         _classCallCheck(this, Upgrades);
 
-        return _possibleConstructorReturn(this, (Upgrades.__proto__ || Object.getPrototypeOf(Upgrades)).call(this, props));
+        var _this3 = _possibleConstructorReturn(this, (Upgrades.__proto__ || Object.getPrototypeOf(Upgrades)).call(this, props));
+
+        _this3.handleUpgrade1 = function () {
+            _this3.setState({
+                upgrade1Stage: _this3.state.upgrade1Stage + 1,
+                upgrade1Price: _this3.state.upgrade1Price * (_this3.state.upgrade1Stage + 1)
+            });
+        };
+
+        _this3.handleUpgrade2 = function () {
+            _this3.setState({
+                upgrade2Stage: _this3.state.upgrade2Stage + 1,
+                upgrade2Price: _this3.state.upgrade2Price * (_this3.state.upgrade2Stage + 1)
+            });
+        };
+
+        _this3.state = {
+            upgrade1Stage: 1,
+            upgrade1Price: 50,
+            upgrade2Stage: 1,
+            upgrade2Price: 50
+        };
+        return _this3;
     }
 
     _createClass(Upgrades, [{
@@ -10271,14 +10293,56 @@ var Upgrades = function (_React$Component3) {
                 'div',
                 null,
                 _react2.default.createElement(
-                    'button',
+                    'div',
                     null,
-                    'Upgrade 1'
+                    _react2.default.createElement(
+                        'h3',
+                        null,
+                        'Upgrade 1'
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        'Stage installed: ',
+                        this.state.upgrade1Stage
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        'Price: ',
+                        this.state.upgrade1Price
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        { onClick: this.handleUpgrade1 },
+                        'Buy upgrade 1'
+                    )
                 ),
                 _react2.default.createElement(
-                    'button',
+                    'div',
                     null,
-                    'Upgrade 2'
+                    _react2.default.createElement(
+                        'h3',
+                        null,
+                        'Upgrade 2'
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        'Stage installed: ',
+                        this.state.upgrade2Stage
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        'Price: ',
+                        this.state.upgrade2Price
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        { onClick: this.handleUpgrade2 },
+                        'Buy upgrade 2'
+                    )
                 )
             );
         }
@@ -10305,7 +10369,7 @@ var DragRace = function (_React$Component4) {
                 }
             }, 10);
             _this4.setState({
-                opponentTime: Math.random() * 20 + 10
+                //opponentTime: (Math.random() * 20 + 10)
             });
             var opponentDragRaceIntrval = setInterval(function () {
                 _this4.setState({
@@ -10320,7 +10384,7 @@ var DragRace = function (_React$Component4) {
 
         _this4.state = {
             myTime: 10.14,
-            opponentTime: 0,
+            opponentTime: 20,
             myInterval: 0,
             opponentInterval: 0,
             opponents: "",

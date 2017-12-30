@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2d4d901d-89d8-489c-8844-ba43d6eae6f2" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/db.json" afterPath="$PROJECT_DIR$/db.json" />
       <change beforePath="$PROJECT_DIR$/dist/js/out.js" afterPath="$PROJECT_DIR$/dist/js/out.js" />
       <change beforePath="$PROJECT_DIR$/src/jsx/app.jsx" afterPath="$PROJECT_DIR$/src/jsx/app.jsx" />
     </list>
@@ -52,8 +51,8 @@
       <file leaf-file-name="app.jsx" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/jsx/app.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="181" column="14" lean-forward="true" selection-start-line="181" selection-start-column="14" selection-end-line="181" selection-end-column="14" />
+            <state relative-caret-position="564">
+              <caret line="155" column="43" lean-forward="true" selection-start-line="155" selection-start-column="43" selection-end-line="155" selection-end-column="43" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -188,12 +187,12 @@
       <workItem from="1514316435530" duration="1118000" />
       <workItem from="1514367619678" duration="930000" />
       <workItem from="1514496649462" duration="4085000" />
-      <workItem from="1514511600681" duration="5478000" />
+      <workItem from="1514511600681" duration="7286000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15071000" />
+    <option name="totallyTimeSpent" value="16879000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -507,8 +506,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/jsx/app.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="181" column="14" lean-forward="true" selection-start-line="181" selection-start-column="14" selection-end-line="181" selection-end-column="14" />
+        <state relative-caret-position="564">
+          <caret line="155" column="43" lean-forward="true" selection-start-line="155" selection-start-column="43" selection-end-line="155" selection-end-column="43" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
