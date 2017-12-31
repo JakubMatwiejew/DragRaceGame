@@ -126,35 +126,57 @@ class Upgrades extends React.Component{
         this.state={
             upgrade1Stage: 1,
             upgrade1Price: 50,
+            upgrade1Installed: "Stock",
+            upgrade1MaxedOut: false,
+            upgrade1ButtonText: "Buy upgrade 1",
             upgrade2Stage: 1,
-            upgrade2Price: 50
+            upgrade2Price: 50,
+            upgrade2Installed: "Stock",
+            upgrade2MaxedOut: false,
+            upgrade2ButtonText: "Buy upgrade 2"
         }
     }
     handleUpgrade1 = () => {
         this.setState({
             upgrade1Stage: this.state.upgrade1Stage+1,
+            upgrade1Installed: this.state.upgrade1Stage,
             upgrade1Price: this.state.upgrade1Price*(this.state.upgrade1Stage+1)
-        })
-    }
+        });
+        if (this.state.upgrade1Stage == 5){
+            this.setState({
+                upgrade1MaxedOut: true,
+                upgrade1Price: "Not available!",
+                upgrade1ButtonText: "Maxed out!"
+            })
+        }
+    };
     handleUpgrade2 = () => {
         this.setState({
             upgrade2Stage: this.state.upgrade2Stage+1,
+            upgrade2Installed: this.state.upgrade2Stage,
             upgrade2Price: this.state.upgrade2Price*(this.state.upgrade2Stage+1)
-        })
+        });
+        if (this.state.upgrade2Stage == 5){
+            this.setState({
+                upgrade2MaxedOut: true,
+                upgrade2Price: "Not available!",
+                upgrade2ButtonText: "Maxed out!"
+            })
+        }
     }
     render(){
         return(<div>
                 <div>
                     <h3>Upgrade 1</h3>
-                    <p>Stage installed: {this.state.upgrade1Stage}</p>
+                    <p>Stage installed: {this.state.upgrade1Installed}</p>
                     <p>Price: {this.state.upgrade1Price}</p>
-                    <button onClick={this.handleUpgrade1}>Buy upgrade 1</button>
+                    <button disabled={this.state.upgrade1MaxedOut} onClick={this.handleUpgrade1}>{this.state.upgrade1ButtonText}</button>
                 </div>
                 <div>
                     <h3>Upgrade 2</h3>
-                    <p>Stage installed: {this.state.upgrade2Stage}</p>
+                    <p>Stage installed: {this.state.upgrade2Installed}</p>
                     <p>Price: {this.state.upgrade2Price}</p>
-                    <button onClick={this.handleUpgrade2}>Buy upgrade 2</button>
+                    <button disabled={this.state.upgrade2MaxedOut} onClick={this.handleUpgrade2}>{this.state.upgrade2ButtonText}</button>
                 </div>
             </div>
         )

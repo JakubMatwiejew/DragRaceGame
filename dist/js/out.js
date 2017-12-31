@@ -10266,22 +10266,44 @@ var Upgrades = function (_React$Component3) {
         _this3.handleUpgrade1 = function () {
             _this3.setState({
                 upgrade1Stage: _this3.state.upgrade1Stage + 1,
+                upgrade1Installed: _this3.state.upgrade1Stage,
                 upgrade1Price: _this3.state.upgrade1Price * (_this3.state.upgrade1Stage + 1)
             });
+            if (_this3.state.upgrade1Stage == 5) {
+                _this3.setState({
+                    upgrade1MaxedOut: true,
+                    upgrade1Price: "Not available!",
+                    upgrade1ButtonText: "Maxed out!"
+                });
+            }
         };
 
         _this3.handleUpgrade2 = function () {
             _this3.setState({
                 upgrade2Stage: _this3.state.upgrade2Stage + 1,
+                upgrade2Installed: _this3.state.upgrade2Stage,
                 upgrade2Price: _this3.state.upgrade2Price * (_this3.state.upgrade2Stage + 1)
             });
+            if (_this3.state.upgrade2Stage == 5) {
+                _this3.setState({
+                    upgrade2MaxedOut: true,
+                    upgrade2Price: "Not available!",
+                    upgrade2ButtonText: "Maxed out!"
+                });
+            }
         };
 
         _this3.state = {
             upgrade1Stage: 1,
             upgrade1Price: 50,
+            upgrade1Installed: "Stock",
+            upgrade1MaxedOut: false,
+            upgrade1ButtonText: "Buy upgrade 1",
             upgrade2Stage: 1,
-            upgrade2Price: 50
+            upgrade2Price: 50,
+            upgrade2Installed: "Stock",
+            upgrade2MaxedOut: false,
+            upgrade2ButtonText: "Buy upgrade 2"
         };
         return _this3;
     }
@@ -10304,7 +10326,7 @@ var Upgrades = function (_React$Component3) {
                         'p',
                         null,
                         'Stage installed: ',
-                        this.state.upgrade1Stage
+                        this.state.upgrade1Installed
                     ),
                     _react2.default.createElement(
                         'p',
@@ -10314,8 +10336,8 @@ var Upgrades = function (_React$Component3) {
                     ),
                     _react2.default.createElement(
                         'button',
-                        { onClick: this.handleUpgrade1 },
-                        'Buy upgrade 1'
+                        { disabled: this.state.upgrade1MaxedOut, onClick: this.handleUpgrade1 },
+                        this.state.upgrade1ButtonText
                     )
                 ),
                 _react2.default.createElement(
@@ -10330,7 +10352,7 @@ var Upgrades = function (_React$Component3) {
                         'p',
                         null,
                         'Stage installed: ',
-                        this.state.upgrade2Stage
+                        this.state.upgrade2Installed
                     ),
                     _react2.default.createElement(
                         'p',
@@ -10340,8 +10362,8 @@ var Upgrades = function (_React$Component3) {
                     ),
                     _react2.default.createElement(
                         'button',
-                        { onClick: this.handleUpgrade2 },
-                        'Buy upgrade 2'
+                        { disabled: this.state.upgrade2MaxedOut, onClick: this.handleUpgrade2 },
+                        this.state.upgrade2ButtonText
                     )
                 )
             );
