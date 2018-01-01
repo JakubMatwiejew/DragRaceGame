@@ -10390,35 +10390,39 @@ var DragRace = function (_React$Component4) {
                     clearInterval(myDragRaceInterval);
                 }
             }, 10);
-            _this4.setState({
-                //opponentTime: (Math.random() * 20 + 10)
-            });
             var opponentDragRaceIntrval = setInterval(function () {
                 _this4.setState({
                     opponentInterval: _this4.state.opponentInterval + 0.01
                 });
-                console.log(_this4.state.opponentTime);
                 if (_this4.state.opponentTime.toFixed(2) == _this4.state.opponentInterval.toFixed(2)) {
                     clearInterval(opponentDragRaceIntrval);
                 }
             }, 10);
+            var win = setTimeout(function () {
+                _this4.setState({
+                    winningInfo: _this4.state.winner
+                });
+            }, _this4.state.winningTime);
         };
 
         _this4.state = {
             myTime: 10.14,
-            opponentTime: 20,
+            opponentTime: 10,
             myInterval: 0,
             opponentInterval: 0,
             opponents: "",
             opponentName: "",
-            opponentPhoto: ""
+            opponentPhoto: "",
+            winner: _this4.props.userName,
+            winningInfo: "",
+            winningTime: false
         };
         return _this4;
     }
 
     _createClass(DragRace, [{
-        key: 'componentWillMount',
-        value: function componentWillMount() {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
             var _this5 = this;
 
             fetch('https://uinames.com/api/?ext[1]').then(function (r) {
@@ -10433,8 +10437,18 @@ var DragRace = function (_React$Component4) {
                     opponentName: opponents[0] + " " + opponents[1],
                     opponentPhoto: opponents[11]
                 });
-                console.log(_this5.state.opponents);
             });
+            if (this.state.opponentTime < this.state.myTime) {
+                this.setState({
+                    winner: "You loose!",
+                    winningTime: this.state.opponentTime * 1000
+                });
+            } else {
+                this.setState({
+                    winner: "You win!",
+                    winningTime: this.state.myTime * 1000
+                });
+            }
         }
     }, {
         key: 'render',
@@ -10471,6 +10485,11 @@ var DragRace = function (_React$Component4) {
                     'button',
                     { onClick: this.dragRace },
                     'Start!'
+                ),
+                _react2.default.createElement(
+                    'h1',
+                    null,
+                    this.state.winningInfo
                 )
             );
         }

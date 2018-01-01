@@ -187,15 +187,18 @@ class DragRace extends React.Component{
         super(props);
         this.state = {
             myTime: 10.14,
-            opponentTime: 20,
+            opponentTime: 10,
             myInterval:0,
             opponentInterval:0,
             opponents: "",
             opponentName: "",
-            opponentPhoto: ""
+            opponentPhoto: "",
+            winner: this.props.userName,
+            winningInfo: "",
+            winningTime: false
         }
     }
-    componentWillMount(){
+    componentDidMount(){
         fetch('https://uinames.com/api/?ext[1]')
             .then(r => r.json())
             .then( data => {
@@ -206,8 +209,18 @@ class DragRace extends React.Component{
                     opponentName: opponents[0]+" "+opponents[1],
                     opponentPhoto: opponents[11]
                 });
-                console.log(this.state.opponents)
             });
+        if(this.state.opponentTime < this.state.myTime){
+            this.setState({
+                winner: "You loose!",
+                winningTime: this.state.opponentTime*1000
+            })
+        } else {
+            this.setState({
+                winner: "You win!",
+                winningTime: this.state.myTime*1000
+            })
+        }
     }
     dragRace = () => {
         var myDragRaceInterval = setInterval(()=>{
@@ -218,18 +231,19 @@ class DragRace extends React.Component{
                 clearInterval(myDragRaceInterval)
             }
         },10);
-        this.setState({
-            //opponentTime: (Math.random() * 20 + 10)
-        });
         var opponentDragRaceIntrval = setInterval(()=>{
             this.setState({
                 opponentInterval: this.state.opponentInterval+0.01
             });
-            console.log(this.state.opponentTime)
             if((this.state.opponentTime).toFixed(2) == (this.state.opponentInterval).toFixed(2)){
                 clearInterval(opponentDragRaceIntrval)
             }
         },10);
+        var win = setTimeout (() => {
+            this.setState({
+                winningInfo: this.state.winner,
+            });
+        }, this.state.winningTime);
     }
     render(){
         return(<div>
@@ -239,6 +253,7 @@ class DragRace extends React.Component{
             <h1>{this.state.opponentName}</h1>
             <h1>{this.state.opponentInterval.toFixed(2)}</h1>
             <button onClick={this.dragRace}>Start!</button>
+            <h1>{this.state.winningInfo}</h1>
         </div>)
     }
 }
